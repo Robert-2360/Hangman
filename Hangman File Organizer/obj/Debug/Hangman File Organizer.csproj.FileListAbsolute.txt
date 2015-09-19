@@ -1,0 +1,6 @@
+D:\My Visual Studio Projects\Hangman File Organizer\Hangman File Organizer\bin\Debug\Hangman File Organizer.exe.config
+D:\My Visual Studio Projects\Hangman File Organizer\Hangman File Organizer\bin\Debug\Hangman File Organizer.exe
+D:\My Visual Studio Projects\Hangman File Organizer\Hangman File Organizer\bin\Debug\Hangman File Organizer.pdb
+D:\My Visual Studio Projects\Hangman File Organizer\Hangman File Organizer\obj\Debug\Hangman File Organizer.csprojResolveAssemblyReference.cache
+D:\My Visual Studio Projects\Hangman File Organizer\Hangman File Organizer\obj\Debug\Hangman File Organizer.exe
+D:\My Visual Studio Projects\Hangman File Organizer\Hangman File Organizer\obj\Debug\Hangman File Organizer.pdb
