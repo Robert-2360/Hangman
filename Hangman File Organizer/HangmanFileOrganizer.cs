@@ -20,7 +20,7 @@ class HangmanFileOrganizer
       int totalWords = 0;
       int longestWordLength = 0;
 
-      // Open file and stream
+      // Open file for reading
       FileStream input = new FileStream(inputFileName, FileMode.Open, FileAccess.Read);
       StreamReader fileReader = new StreamReader(input);
 
@@ -55,31 +55,30 @@ class HangmanFileOrganizer
        * Verify the number of words in the file
        * Determine the number of non-compliant words
        * Non-compliant means: having a letter or symbol other than a lower case letter
-       * Examples of non-compliant: Florida, don't, sam23, to-date, john@aol.com, 
+       * Examples of non-compliant: Florida, don't, sam23, to-date, john@aol.com, goHigh
        * Display a report on:
-       *    Number of words for each length
-       *    Number of non-compliant words
-       *    Total number of words in the file */
+       *    Total number of words for each length
+       *    Total number of non-compliant words
+       *    The sum these words for verification */
 
       // initialize variables
-      int[] wordLengths = new int[longestWordLength + 1];
-      int numberNonCompliant = 0;
       bool isAllLowerCase = true;
+      int numberNonCompliant = 0;
       int verifyCount = 0;
-
-      // Open file and stream
+      int[] wordLengths = new int[longestWordLength + 1];
+      
+      // Open file for reading again
       input = new FileStream(inputFileName, FileMode.Open, FileAccess.Read);
       fileReader = new StreamReader(input);
 
-      // Iterate through the file
+      // Iterate through the file again
       word = fileReader.ReadLine();
       while (word != null)
       {
          // Reset flag
          isAllLowerCase = true;
 
-         // Count the number of non-compliant words
-         // and flag its existence
+         // Count the number of non-compliant words and flag its existence
          foreach (char letter in word)
          {
             if (!Char.IsLower(letter))
@@ -103,12 +102,27 @@ class HangmanFileOrganizer
       // Display results and sum each word length for verification
       for (int i = 0; i <= longestWordLength; i++)
       {
-         Console.WriteLine("Total words of length-{0} is: {1}", i, wordLengths[i]);
+         double percentage = 100.0 * wordLengths[i] / totalWords;
+         Console.WriteLine("Total words of length-{0, -2} is: {1, 3} or {2, 4:F1}%",
+            i, wordLengths[i], percentage);
          verifyCount += wordLengths[i];
       }
+      Console.WriteLine();
+      Console.WriteLine("Total number of non-compliant words is: {0, -2} or {1:F1}%",
+         numberNonCompliant, 100.0 * numberNonCompliant / totalWords);
+      Console.WriteLine();
       Console.WriteLine("Verify total number of words in file: {0}", verifyCount + numberNonCompliant);
 
       // Close file
       fileReader.Close();
+
+
+      /* This section will:
+       * 
+       */
+
+
+      // Freeze console window
+      Console.ReadLine();
    }
 }
