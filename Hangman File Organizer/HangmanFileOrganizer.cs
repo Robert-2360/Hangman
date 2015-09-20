@@ -42,12 +42,13 @@ class HangmanFileOrganizer
       }
 
       //display results
-      Console.WriteLine("Total number of words in file is: {0}", totalWords);
+      Console.WriteLine("Total number of words in the original file is: {0}", totalWords);
       Console.WriteLine("The maximum word length is: {0}", longestWordLength);
       Console.WriteLine();
 
       // Close file
       fileReader.Close();
+
 
 
       /* This section will:
@@ -66,7 +67,7 @@ class HangmanFileOrganizer
       int numberNonCompliant = 0;
       int verifyCount = 0;
       int[] wordLengths = new int[longestWordLength + 1];
-      
+
       // Open file for reading again
       input = new FileStream(inputFileName, FileMode.Open, FileAccess.Read);
       fileReader = new StreamReader(input);
@@ -92,7 +93,7 @@ class HangmanFileOrganizer
          // Count the number of compliant words for each length
          if (isAllLowerCase)
          {
-         wordLengths[word.Length]++;
+            wordLengths[word.Length]++;
          }
 
          // Read next word in the file
@@ -111,16 +112,92 @@ class HangmanFileOrganizer
       Console.WriteLine("Total number of non-compliant words is: {0, -2} or {1:F1}%",
          numberNonCompliant, 100.0 * numberNonCompliant / totalWords);
       Console.WriteLine();
-      Console.WriteLine("Verify total number of words in file: {0}", verifyCount + numberNonCompliant);
+      Console.WriteLine("Verify total number of words in the original file: {0}",
+         verifyCount + numberNonCompliant);
+      Console.WriteLine();
 
       // Close file
       fileReader.Close();
 
 
+
+
       /* This section will:
-       * 
+       * Establish a minimum and maximum word length
+       * Load all compliant words into a string array
+       * Sort the array (So that it is easier to locate a word if necessary later)
+       * Write the array into a text file (This file will be the one used for the game)
        */
 
+      // initialize variables
+      int minimumWordLength = 4;
+      int maximumWordLength = 9;
+      int wordArraySize = 0;
+      int index = 0;
+      string outputFileName = @"D:\HangmanWords.txt";
+
+      // calculate size of array
+      for (int i = minimumWordLength; i <= maximumWordLength; i++)
+      {
+         wordArraySize += wordLengths[i];
+      }
+
+      // initialize array
+      string[] hangmanWords = new string[wordArraySize];
+
+      // Open file for reading again
+      input = new FileStream(inputFileName, FileMode.Open, FileAccess.Read);
+      fileReader = new StreamReader(input);
+
+      // Iterate through the file again
+      word = fileReader.ReadLine();
+      while (word != null)
+      {
+         // Reset flag
+         isAllLowerCase = true;
+
+         // Flag non-compliant words
+         foreach (char letter in word)
+         {
+            if (!Char.IsLower(letter))
+            {
+               isAllLowerCase = false;
+               break;
+            }
+         }
+
+         // 
+         if (word.Length >= minimumWordLength && word.Length <= maximumWordLength && isAllLowerCase)
+         {
+            hangmanWords[index] = word;
+            index++;
+         }
+
+         // Read next word in the file
+         word = fileReader.ReadLine();
+      }
+
+      // Close file
+      fileReader.Close();
+
+      // Sort the array
+      Array.Sort(hangmanWords);
+
+      // Open file for writing
+      FileStream output = new FileStream(outputFileName, FileMode.Create, FileAccess.Write);
+      StreamWriter fileWriter = new StreamWriter(output);
+
+      // Write array into a file
+      foreach (string w in hangmanWords)
+      {
+         fileWriter.WriteLine(w);
+      }
+
+      // Close the file
+      fileWriter.Close();
+
+      Console.WriteLine("File {0} was just created.", outputFileName);
+      Console.WriteLine();
 
       // Freeze console window
       Console.ReadLine();
