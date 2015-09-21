@@ -196,7 +196,8 @@ class HangmanFileOrganizer
       // Close the file
       fileWriter.Close();
 
-      Console.WriteLine("File {0} was just created.", outputFileName);
+      Console.WriteLine("File {0} was just created,", outputFileName);
+      Console.WriteLine(" with {0} words in its file.", hangmanWords.Length);
       Console.WriteLine();
 
       // Freeze console window
