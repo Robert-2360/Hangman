@@ -166,7 +166,7 @@ class HangmanFileOrganizer
             }
          }
 
-         // 
+         // Add appropriate word into array
          if (word.Length >= minimumWordLength && word.Length <= maximumWordLength && isAllLowerCase)
          {
             hangmanWords[index] = word;
@@ -187,10 +187,11 @@ class HangmanFileOrganizer
       FileStream output = new FileStream(outputFileName, FileMode.Create, FileAccess.Write);
       StreamWriter fileWriter = new StreamWriter(output);
 
-      // Write array into a file
+      // Write array into a file and check for correctness if necessary
       foreach (string w in hangmanWords)
       {
          fileWriter.WriteLine(w);
+         //Console.WriteLine("{0} {1}", w, w.Length);
       }
 
       // Close the file
